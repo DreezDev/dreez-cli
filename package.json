@@ -4,7 +4,7 @@
   "description": "A blazing-fast developer CLI to update and manage your dev tools",
   "type": "module",
   "bin": {
-    "dreez": "./dist/index.js"
+    "dreez": "dist/index.js"
   },
   "scripts": {
     "dev": "bun run src/index.ts",
@@ -29,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DreezDev/dreez-cli.git"
+    "url": "git+https://github.com/DreezDev/dreez-cli.git"
   },
   "homepage": "https://github.com/DreezDev/dreez-cli#readme",
   "bugs": {
