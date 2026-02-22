@@ -25,8 +25,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # No registry-url here — it would write an empty _authToken to .npmrc
-          # and override npm's automatic OIDC Trusted Publisher detection
+          registry-url: 'https://registry.npmjs.org'
+          # registry-url is required: tells npm which registry to use for OIDC exchange
+          # Do NOT set NODE_AUTH_TOKEN — Trusted Publisher authenticates via id-token
+
+      - name: Update npm (Trusted Publisher requires npm >= 9.9.0)
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: bun install
