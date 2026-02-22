@@ -36,11 +36,18 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Sync version from tag
-        # Sets package.json version to match the Git tag (e.g. v1.2.0 → 1.2.0)
+      - name: Verify version matches tag
+        # Fails the workflow if package.json version doesn't match the release tag
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
-          npm version "$TAG" --no-git-tag-version
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          echo "package.json version : $PKG_VERSION"
+          echo "Release tag version  : $TAG_VERSION"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "❌ Version mismatch! Update package.json to $TAG_VERSION before releasing."
+            exit 1
+          fi
+          echo "✅ Versions match — proceeding to publish."
 
       - name: Publish to npm
         run: npm publish --access public --provenance
