@@ -26,11 +26,17 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-          # registry-url is required: tells npm which registry to use for OIDC exchange
-          # Do NOT set NODE_AUTH_TOKEN — Trusted Publisher authenticates via id-token
 
       - name: Update npm (Trusted Publisher requires npm >= 9.9.0)
         run: npm install -g npm@latest
+
+      - name: Clean .npmrc for OIDC auth
+        # setup-node writes _authToken=${NODE_AUTH_TOKEN} which sends an empty token
+        # and prevents npm from using the OIDC Trusted Publisher flow.
+        # We keep only the registry line so npm falls back to OIDC automatically.
+        run: |
+          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
+          echo "✅ .npmrc cleared for OIDC Trusted Publisher"
 
       - name: Install dependencies
         run: bun install
@@ -42,7 +48,6 @@ jobs:
         run: bun run build
 
       - name: Sync version from tag
-        # Pass the tag as env var to avoid shell interpolation issues in node -e
         env:
           VERSION: ${{ github.ref_name }}
         run: |
@@ -57,6 +62,6 @@ jobs:
           echo "✅ package.json version set to $VERSION"
 
       - name: Publish to npm
-        # npm detects ACTIONS_ID_TOKEN_REQUEST_URL automatically (id-token: write)
-        # and exchanges it with npm registry for a temporary token (Trusted Publisher)
+        # With a clean .npmrc (no _authToken) npm detects ACTIONS_ID_TOKEN_REQUEST_URL
+        # and automatically exchanges it with npm registry (Trusted Publisher OIDC)
         run: npm publish --access public --provenance
