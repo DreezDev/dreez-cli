@@ -1,0 +1,21 @@
+{
+  "name": "dreez-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "dreez": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
