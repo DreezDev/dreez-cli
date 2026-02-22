@@ -7,7 +7,8 @@ Update, manage, and configure your dev tools — with style.
 
 [![Bun](https://img.shields.io/badge/Runtime-Bun-black?logo=bun&logoColor=white)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blueviolet)](./package.json)
+[![npm](https://img.shields.io/npm/v/@dreezdev/cli?color=blueviolet&logo=npm)](https://www.npmjs.com/package/@dreezdev/cli)
+[![CI](https://img.shields.io/github/actions/workflow/status/DreezDev/dreez-cli/ci.yml?branch=main&label=CI&logo=github)](https://github.com/DreezDev/dreez-cli/actions)
 [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 
 </div>
@@ -156,6 +157,33 @@ bun run src/index.ts update angular --pm npm
 - [ ] `dreez install` — scaffold common project setups
 - [ ] `dreez config` — manage global dreez preferences
 - [ ] Plugin system for community-contributed tools
+
+---
+
+## 🚢 Releasing
+
+Este proyecto usa **GitHub Actions** para CI/CD automático:
+
+| Trigger                        | Workflow      | Acción                |
+| ------------------------------ | ------------- | --------------------- |
+| Push / PR a `main`             | `ci.yml`      | Type-check + Build    |
+| Crear un **Release** en GitHub | `publish.yml` | Build + Publish a npm |
+
+### Cómo publicar una nueva versión
+
+```bash
+# 1. Commitea todos tus cambios a main
+git push origin main
+
+# 2. Ve a GitHub → Releases → Draft a new release
+#    Tag: v1.1.0  (el workflow sincroniza el package.json automáticamente)
+#    Title: v1.1.0 - <descripción>
+#    Click "Publish release"  →  GitHub Actions publica a npm 🚀
+```
+
+> ⚙️ **Requisito**: Agrega tu `NPM_TOKEN` como secret en
+> `GitHub repo → Settings → Secrets → Actions → New repository secret`
+> Nombre: `NPM_TOKEN` | Valor: token de [npmjs.com/settings/tokens](https://www.npmjs.com/settings/tokens) (tipo **Automation**)
 
 ---
 

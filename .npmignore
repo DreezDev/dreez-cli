@@ -1,0 +1,12 @@
+# Source (already compiled to dist/)
+src/
+
+# Config files
+tsconfig.json
+bun.lockb
+*.lock
+
+# Dev stuff
+node_modules/
+.git/
+.gitignore

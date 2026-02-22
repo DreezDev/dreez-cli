@@ -1,12 +1,42 @@
 {
-  "name": "dreez-cli",
+  "name": "@dreezdev/cli",
   "version": "1.0.0",
+  "description": "A blazing-fast developer CLI to update and manage your dev tools",
   "type": "module",
   "bin": {
-    "dreez": "./src/index.ts"
+    "dreez": "./dist/index.js"
   },
   "scripts": {
-    "start": "bun run src/index.ts"
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outfile dist/index.js --target=bun",
+    "prepublishOnly": "bun run build"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "cli",
+    "angular",
+    "update",
+    "bun",
+    "npm",
+    "developer-tools",
+    "dreez"
+  ],
+  "author": "DreezDev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DreezDev/dreez-cli.git"
+  },
+  "homepage": "https://github.com/DreezDev/dreez-cli#readme",
+  "bugs": {
+    "url": "https://github.com/DreezDev/dreez-cli/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
   },
   "dependencies": {
     "commander": "^12.0.0",
