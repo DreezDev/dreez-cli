@@ -9,8 +9,8 @@ jobs:
     name: Build & Publish
     runs-on: ubuntu-latest
     permissions:
+      id-token: write # Required for OIDC Trusted Publisher
       contents: read
-      id-token: write # required — npm OIDC Trusted Publisher + provenance signing
 
     steps:
       - name: Checkout
@@ -21,22 +21,12 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Setup Node (for npm publish)
+      - name: Setup Node 24
+        # npm Trusted Publisher requires Node 24 (official npm docs requirement)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Update npm (Trusted Publisher requires npm >= 9.9.0)
-        run: npm install -g npm@latest
-
-      - name: Clean .npmrc for OIDC auth
-        # setup-node writes _authToken=${NODE_AUTH_TOKEN} which sends an empty token
-        # and prevents npm from using the OIDC Trusted Publisher flow.
-        # We keep only the registry line so npm falls back to OIDC automatically.
-        run: |
-          echo "registry=https://registry.npmjs.org/" > ~/.npmrc
-          echo "✅ .npmrc cleared for OIDC Trusted Publisher"
 
       - name: Install dependencies
         run: bun install
@@ -62,6 +52,6 @@ jobs:
           echo "✅ package.json version set to $VERSION"
 
       - name: Publish to npm
-        # With a clean .npmrc (no _authToken) npm detects ACTIONS_ID_TOKEN_REQUEST_URL
-        # and automatically exchanges it with npm registry (Trusted Publisher OIDC)
-        run: npm publish --access public --provenance
+        # --provenance is NOT needed: Trusted Publisher generates it automatically
+        # --access public IS needed: scoped packages (@dreezdev/cli) default to private
+        run: npm publish --access public
