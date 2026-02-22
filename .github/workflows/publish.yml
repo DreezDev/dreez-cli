@@ -49,5 +49,6 @@ jobs:
           echo "✅ package.json version set to $TAG"
 
       - name: Publish to npm
-        # OIDC Trusted Publisher: no NPM_TOKEN needed — npm authenticates via id-token
         run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
