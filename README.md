@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ dreez
+# ⚡ Dreez CLI
 
 **A blazing-fast developer CLI built on [Bun](https://bun.sh)**  
 Update, manage, and configure your dev tools — with style.
@@ -17,8 +17,7 @@ Update, manage, and configure your dev tools — with style.
 
 ## ✨ Features
 
-- 🚀 **Animated spinners** — real-time progress feedback, bun/npm style
-- 📦 **Multi package manager support** — `bun`, `npm`, `pnpm`, `deno`
+- 📦 **Multi package manager support** — `bun`, `npm`, `pnpm`
 - 🔧 **Tool updates made easy** — one command to uninstall, reinstall, and configure
 - 💬 **Interactive prompts** — asks before making permanent changes (e.g. setting default PM)
 - 🎨 **Colorful, clean output** — powered by [picocolors](https://github.com/alexeyraspopov/picocolors)
@@ -32,7 +31,7 @@ Update, manage, and configure your dev tools — with style.
 ### Install globally (recommended)
 
 ```bash
-bun install -g dreez-cli
+bun install -g @dreezdev/cli
 ```
 
 ### Or clone and link locally
@@ -155,6 +154,10 @@ bun run src/index.ts update angular --pm npm
 - [ ] `dreez update bun` — self-update Bun runtime
 - [ ] `dreez update nx` — update Nx workspace tooling
 - [ ] `dreez install` — scaffold common project setups
+- [ ] `dreez new fastapi` — scaffold common project setups
+- [ ] `dreez new angular` — scaffold common project setups
+- [ ] `dreez new astro` — scaffold common project setups
+- [ ] `dreez new tauri` — scaffold common project setups
 - [ ] `dreez config` — manage global dreez preferences
 - [ ] Plugin system for community-contributed tools
 
